@@ -1,0 +1,75 @@
+{
+  "name": "qrt26a",
+  "productName": "Q-Bit",
+  "version": "0.1.0",
+  "description": "MySQL / MariaDB query tool (Querious-style)",
+  "main": "main/main.js",
+  "private": true,
+  "scripts": {
+    "build:renderer": "esbuild src/index.jsx --bundle --outfile=dist/renderer.js --loader:.js=jsx --jsx=automatic --minify --sourcemap --define:process.env.NODE_ENV=\\\"production\\\"",
+    "watch": "esbuild src/index.jsx --bundle --outfile=dist/renderer.js --jsx=automatic --sourcemap --watch",
+    "start": "npm run build:renderer && electron .",
+    "dist": "npm run build:renderer && electron-builder --mac",
+    "app": "npm run build:renderer && electron-builder --mac dir"
+  },
+  "build": {
+    "appId": "dev.local.qbit",
+    "productName": "Q-Bit",
+    "files": [
+      "main/**",
+      "renderer/**",
+      "dist/**",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
+      "identity": null
+    },
+    "directories": {
+      "output": "release"
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false,
+      "resetAdHocDarwinSignature": true
+    }
+  },
+  "dependencies": {
+    "mysql2": "^3.24.6",
+    "ssh2": "^1.17.0"
+  },
+  "devDependencies": {
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-sql": "^6.10.0",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "^1.2.5",
+    "codemirror": "^6.0.2",
+    "electron": "^45.3.0",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.65.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "electron@45.3.0": true,
+    "cpu-features": false,
+    "ssh2": false,
+    "electron-winstaller": false
+  }
+}
